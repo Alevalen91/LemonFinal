@@ -1,4 +1,5 @@
-import { StyleSheet, ScrollView, View, Text } from "react-native";
+import { StyleSheet, ScrollView, View, Text, Image, Pressable } from "react-native";
+import { useFonts } from 'expo-font';
 import { Header } from "./header"
 
 export default function Profile(){
@@ -10,8 +11,20 @@ export default function Profile(){
                 <Header isLogged = {true}/>
       </View>
             <View style={styles.formContainer}>
-            <Text> Profile works! </Text> 
-            </View>
+
+                <Text style={styles.profileSectionText}>Personal information</Text>
+                <Text style={styles.avatarText}>Avatar</Text>
+               <View style={styles.avatarRow}>  
+                
+                <Image source={require("../assets/Profile.png")} style={styles.imgProfile}></Image>
+                <Pressable onPress={() => alert("Coming Soon!")} style={styles.button}>
+                    <Text style={styles.buttonText}>Change </Text>
+                    </Pressable>
+                    <Pressable onPress={() => alert("Coming Soon!")} style={styles.buttonRemove}>
+                    <Text style={styles.buttonText}>Remove </Text>
+                    </Pressable>
+               </View>
+            </View> 
         </ScrollView>
     )
 }
@@ -28,47 +41,33 @@ const styles = StyleSheet.create({
       flex: 6,
       backgroundColor: 'white',
     },
-    heroContainer: {
-      flex: 5,
-      backgroundColor: '#495E57',
-    },
+
     formContainer:{
       flex:4,
       marginTop:20,
   
     },
-    heroSubContainer: {
-      flexDirection: 'row',
-      marginBottom: 10,
+    avatarText:{
+        color: 'lightgrey',
+        fontSize: 10,
+        paddingHorizontal: 5,
+        paddingVertical: 10
     },
-    heroImage: {
-      height: 150,
-      width: 150,
-      resizeMode: 'cover',
-      borderRadius: 16,
-      marginLeft:30
+    imgProfile: {
+        resizeMode: 'contain',
+        height: 70,
+        width: 75,
+      },
+    profileSectionText:{
+        fontSize: 12,
+        color: 'black',
+        paddingHorizontal: 10,
+        marginTop: 10,
+        marginBottom:10,
+        fontFamily: 'serif',
+        fontWeight: 'bold'
     },
-    titleText: {
-  
-      fontSize: 30,
-      color: '#F4CE14',
-      paddingHorizontal: 10,
-      marginTop: 10,
-    },
-    subTitleText: {
-  
-      fontSize: 20,
-      color: '#EDEFEE',
-      paddingHorizontal: 10,
-    },
-    descriptionText: {
-  
-      fontSize: 17,
-      paddingVertical: 20,
-      paddingLeft: 10,
-      color: '#EDEFEE',
-      width: 200,
-    },
+    
     header: {
       flex: 0.15,
       justifyContent: 'center',
@@ -76,26 +75,29 @@ const styles = StyleSheet.create({
       backgroundColor: '#ddd',
       flexDirection: 'row',
     },
-    content: {
-      flex: 0.7,
-      alignItems: 'center',
-      backgroundColor: '#EDEFEE',
-    },
-    bottom: {
-      flex: 0.15,
-      alignItems: 'flex-end',
-      backgroundColor: '#EDEFEE',
-    },
+    
+
     button: {
       backgroundColor: '#495E57',
       borderRadius: 10,
-      paddingHorizontal: 30,
-      paddingVertical: 3,
-      marginHorizontal: 50,
-      marginVertical: 20,
-      width: 250,
-    
+      width: 80,
+      height: 40,
+      paddingVertical: 8,
+      paddingHorizontal: 5,
+      marginTop: 5
    
+    },
+
+    buttonRemove: {
+        backgroundColor: 'white',
+        borderWidth: 1,
+        borderColor: "#495E57",
+        width: 80,
+        height: 40,
+        paddingVertical: 8,
+        marginRight: 15,
+        paddingHorizontal: 5,
+        marginTop: 5
     },
     buttonDisabled: {
       backgroundColor: '#495E57',
@@ -107,26 +109,10 @@ const styles = StyleSheet.create({
       opacity: 0.6,
       width: 250,
     },
-    headerText: {
-      fontSize: 35,
-      fontFamily: 'serif',
-      lineHeight: 40,
-    },
-    contentText: {
-      fontSize: 15,
-      fontSize: 25,
-      marginTop: 20,
-      marginBottom: 10,
-      marginHorizontal: 50
-    },
-    subHeaderText: {
-  
-      fontSize: 20,
-      fontSize: 25,
-      marginTop: 15,
-    },
+
+ 
     buttonText: {
-      fontSize: 25,
+      fontSize: 15,
       color: 'black',
       textAlign: "center"
     },
@@ -144,6 +130,10 @@ const styles = StyleSheet.create({
       width: 70,
       resizeMode: 'cover',
       borderRadius: 20,
+    },
+    avatarRow:{
+        flexDirection: "row",
+        justifyContent: "space-between"
     }
   });
   
