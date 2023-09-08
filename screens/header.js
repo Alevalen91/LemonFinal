@@ -2,7 +2,7 @@ import { View, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 
 
 export const Header = ( props ) => {
-console.log(props.isLogged)
+
   if (!props.isLogged) {
     return (
       <View style={styles.header}>
