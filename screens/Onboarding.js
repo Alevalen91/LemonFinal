@@ -5,15 +5,23 @@ import { useState, useEffect } from 'react';
 import { Header } from "./header"
 
 
-export default function Onboarding() {
+export default function Onboarding({ navigation }) {
   const [firstName, onChangeFirstName] = useState('');
   const [email, onChangeEmail] = useState('');
   const [loggedIn, onLogin] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
 
 
-  useEffect(() => { setIsDisabled(!(validateEmail(email) && !validateName(firstName))); },
+  useEffect(() => { setIsDisabled(!(validateEmail(email) && validateName(firstName)));  
+},
     [firstName, email]);
+
+
+    useEffect(()=> {
+      if(loggedIn){
+      navigation.navigate('Profile')
+      }
+    }, [loggedIn])
 
 
   return (
@@ -21,7 +29,7 @@ export default function Onboarding() {
     <ScrollView style={styles.container}>
 
       <View style={styles.headerContainer}>
-        <Header />
+        <Header isLogged = {loggedIn} />
       </View>
 
 
@@ -52,7 +60,7 @@ export default function Onboarding() {
         >
 
         </TextInput>
-        <Pressable onPress={() => onLogin(!loggedIn)} disabled={isDisabled} style={styles.button}>
+        <Pressable onPress={() => onLogin(!loggedIn)} disabled={isDisabled} style={isDisabled? styles.buttonDisabled : styles.button}>
           <Text style={styles.buttonText}>Next</Text>
         </Pressable>
 
@@ -137,8 +145,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 30,
     paddingVertical: 3,
-    marginHorizontal: "auto",
-    width: 200,
+    marginHorizontal: 50,
+    marginVertical: 20,
+    width: 250,
   
  
   },
@@ -147,9 +156,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 30,
     paddingVertical: 3,
-    marginHorizontal: 10,
+    marginHorizontal: 50,
     marginVertical: 20,
-    opacity: 0.3
+    opacity: 0.6,
+    width: 250,
   },
   headerText: {
     fontSize: 35,
@@ -157,11 +167,11 @@ const styles = StyleSheet.create({
     lineHeight: 40,
   },
   contentText: {
-
     fontSize: 15,
     fontSize: 25,
     marginTop: 20,
     marginBottom: 10,
+    marginHorizontal: 50
   },
   subHeaderText: {
 
@@ -170,16 +180,18 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   buttonText: {
-    fontSize: 30,
+    fontSize: 25,
     color: 'black',
+    textAlign: "center"
   },
   textInput: {
     backgroundColor: '#EDEFEE',
     height: 40,
-    width: 280,
+    width: 250,
     borderRadius: 8,
     padding: 10,
     borderWidth: 2,
+    marginHorizontal: 50
   },
   logo: {
     height: 70,
