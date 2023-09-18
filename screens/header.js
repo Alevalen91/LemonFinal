@@ -1,8 +1,11 @@
-import { View, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
-
+import { View, TouchableOpacity, Text, StyleSheet, Image, Pressable } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 export const Header = ( props ) => {
-
+  const navigation = useNavigation();
+  function goToProfile(){
+    navigation.navigate("Profile");
+  }
   if (!props.isLogged) {
     return (
       <View style={styles.header}>
@@ -15,7 +18,9 @@ export const Header = ( props ) => {
     return (
       <View style={styles.headerProfile}>
         <Image source={require('../assets/Logo.png')} style={styles.logoProfile} />
-        <Image source={require("../assets/Profile.png")} style={styles.imgProfile}></Image>
+        <Pressable onPress={()=> goToProfile()}>   
+        <Image source={require("../assets/Profile.png")} style={styles.imgProfile}/>
+      </Pressable>
       </View>
     );
 }
@@ -25,7 +30,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 1,
   },
 
   headerProfile: {
@@ -36,8 +41,8 @@ const styles = StyleSheet.create({
   },
   logo: {
     resizeMode: 'contain',
-    height: 150,
-    width: 200,
+    height: 100,
+    width: 150,
     marginHorizontal: "auto"
   },
   logoProfile: {

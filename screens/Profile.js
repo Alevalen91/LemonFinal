@@ -3,8 +3,9 @@ import { useFonts } from 'expo-font';
 import CheckBox from "expo-checkbox"
 import { useState, useEffect } from 'react';
 import { Header } from "./header"
+import { getProfiles, truncateProfile } from "../database";
 
-export default function Profile() {
+export default function Profile({navigation}) {
     const [firstName, onChangeFirstName] = useState('');
     const [email, onChangeEmail] = useState('');
     const [lastName, onChangeLastName] = useState('');
@@ -14,9 +15,32 @@ export default function Profile() {
     const [offers, onChangeOffers] = useState(false);
     const [password, onChangePassword] = useState(false);
 
-useEffect(()=>{
-    console.log("password " + password + " orders " + orders + " newsletter " + newsletter)
-}, [password, orders, orders])
+
+    function logout(){
+        truncateProfile().then(
+            navigation.navigate("OnBoarding")
+        )
+    }
+    let Profile;
+    useEffect(()=>{
+        getProfileFromDb();
+
+    }, [])
+
+    async function getProfileFromDb(){
+
+        let Profile =   await getProfiles().then(profile => {return profile});
+      
+        onChangeFirstName(Profile.firstname),
+        onChangeEmail( Profile.email),
+        onChangeLastName(Profile.lastname),
+        onChangePhone(Profile.phone),
+        onChangeOrders(Boolean(Profile.orders)),
+        onChangeNewsLetter(Boolean(Profile.newsletter)),
+        onChangeOffers(Boolean(Profile.offers)),
+        onChangePassword(Boolean(Profile.password))
+        
+    }
 
     return (
         <ScrollView style={styles.container}>
@@ -112,6 +136,9 @@ useEffect(()=>{
                     <Text style={styles.label}>Newsletter</Text>
                 </View>
                 </View>
+                <Pressable onPress={() => logout()} style={styles.buttonLogout}>
+                    <Text style={styles.logoutText}>Logout</Text>
+                </Pressable>
             </View>
         </ScrollView>
     )
@@ -167,6 +194,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
 
+    logoutText: {
+        fontFamily: 'serif',
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
 
     button: {
         backgroundColor: '#495E57',
@@ -175,8 +207,19 @@ const styles = StyleSheet.create({
         height: 40,
         paddingVertical: 8,
         paddingHorizontal: 5,
-        marginTop: 5
+        marginTop: 5,
+        marginHorizontal:12
 
+    },
+
+    buttonLogout:{
+        width:200,
+        padding: 5,
+        marginHorizontal:'auto',
+        backgroundColor: '#FAD940',
+        color: 'black',
+        borderRadius: 10,
+        marginHorizontal: 100
     },
 
     buttonRemove: {
